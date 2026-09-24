@@ -180,7 +180,7 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 **Audience**: people who want LLMs to auto-generate decks from outlines / Markdown (consultants, lecturers, students).
 **Notes**: overlaps with `anthropics/skills`'s pptx skill; use this when the official one isn't enough.
 
-### [1weiho/open-slide](https://github.com/1weiho/open-slide) ⭐⭐⭐⭐
+### [open-slide/open-slide](https://github.com/open-slide/open-slide) ⭐⭐⭐⭐
 
 | Field | Value |
 |---|---|
@@ -190,17 +190,6 @@ Installation and testing belong in [Stage 5](../stages/05-claude-code-ecosystem.
 **What it does**: a React slide framework built for coding agents — describe a deck in natural language and let Claude Code / Codex / Cursor write the React; ships two Claude Code Skills (`/create-slide`, `/slide-authoring`).
 **Audience**: people who want agents to produce decks as code (git-versionable) — a different route from PowerPoint-MCP's .pptx output.
 **Notes**: TypeScript / React / Vite; scaffold with `npx @open-slide/cli init`. It's an agent-native tool (agents author with it), not a Stage 4 agent-building / orchestration framework.
-
-### [SylphxAI/pdf-reader-mcp](https://github.com/SylphxAI/pdf-reader-mcp) ⭐⭐⭐⭐
-
-| Field | Value |
-|---|---|
-| License | MIT |
-| Rating | ⭐⭐⭐⭐ (high-throughput PDF) |
-
-**What it does**: high-speed PDF parsing MCP, ~5-10× faster than `anthropics/skills`'s pdf skill (per their claim).
-**Audience**: people doing batch reads of papers / contracts / reports.
-**Notes**: parallel processing; noticeable on large PDFs.
 
 ### [tfriedel/claude-office-skills](https://github.com/tfriedel/claude-office-skills) ⭐⭐⭐
 
@@ -1151,6 +1140,6 @@ Not an SLA — just "do what you can" guidance:
 - Treat vendor documentation or the canonical repo as the source for official status, licensing, permissions, and hosted endpoints.
 - CI periodically scans repository redirects, archive status, HTTP errors, and freshness signals. A warning still needs human judgment; do not remove a stable tool only because it has not released recently.
 - Define the reader's task and safety boundary before opening a new category, then add verifiable official or high-quality community entries.
-- Apply the same learning-value, maintenance, licensing, and permission standards to Chinese-community tools; do not use a star threshold.
+- Apply the same rule to Chinese-community tools: a newly added third-party GitHub repo needs at least 1,000 stars, plus checks for learning value, maintenance, licensing, and permissions. Official documentation, standards, and irreplaceable canonical sources are exempt.
 - Make wording and formatting clear enough for a five-year-old to follow while preserving exact terms, limits, and sources.
 </details>

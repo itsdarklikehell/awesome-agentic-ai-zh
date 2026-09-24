@@ -6,6 +6,24 @@ Format: `YYYY-MM-DD · category · 1-line summary (commit-sha)`.
 
 ---
 
+## 2026-09-23
+
+- **content / Stage 1 / GPT-6 models** · 官方 API 文件已列出 GPT-6 Sol 與 Luna；三語選型主線及 18 家族詳表同步更新型號 ID、context、Standard 輸入／快取讀寫／輸出價格和長上下文計費條件。GPT-5.6 Terra／Luna 不再列作現行推薦；全表原查核日期與本次 GPT 查核日期分開標示，更新官方來源與回歸測試，初學者的 Ollama 起點維持不變。
+
+## 2026-09-22
+
+- **content / Stage 1 / Agent models** · 三語模型詳表由 16 增為 18 家族：按官方 API 規格加入 Grok 4.7 與 MiMo V2.6 Pro；更新 Claude Opus 5.5 的型號與價格、DeepSeek V4.1 Flash 的新 ID／尖峰離峰價格與舊名界線、Muse Spark 1.3 的 Preview／Standard／Contributor 方案，並區分 Muse Glimmer 開放權重與個人 Agent 產品。Gemini 3.8 Live 只作語音 Agent 選讀；MiniMax M3 補 cache 與長上下文價、Yi 改列歷史，不宣稱供應商 benchmark 為跨模型排名。繁中、簡中、英文事實標記與回歸測試同步更新；可見選模型主線、必讀、精選資源、五星與完成條件未收合。
+
+- **content / everyday-user route / personal Agent** · 三語日常使用者路線短介 Meta Muse 在美國逐步開放的個人 Agent，明確區分 Muse 產品、Muse Spark API 模型和 Muse Code，提醒連接帳號與重要動作須由人確認。未新增第三方 GitHub 專案，也未更動其他 Stage 或概念圖。
+
+- **release health / links and repositories** · 發布前完整掃描修正 Strands Agents 官方 quickstart 的 404 舊路徑、將 Open Slide 三語目錄連結改成現行 `open-slide/open-slide`，並移除已更名為 Citra、目前低於 1,000 GitHub stars 的舊 PDF 推薦及無來源速度比較。重新查核 261 個仍被引用的 repo 並更新機器快照；原有編輯星等不當成 GitHub stars。
+
+## 2026-09-19
+
+- **content / Stage 1 / typed decisions** · 依 TypeSafe AI 官方文件與發布說明，三語新增 **Jev**：先用白話把它定位成不寫自由文字的型別化決策模型，再說明 Choice、Score、Noul、機率、門檻與 fallback。完整模型表由 15 家增為 16 家，列出 Jev 1.13、`jev-1.13.0`／`jev-latest`、TypeSafe direct 的 64K request／32K `state` 加最長 question 與 $0.042／百萬 input token；Cloudflare 的 `typesafe/jev` route 另列 32K context，價格以其 dashboard 為準。服務仍為 early access；不把 Jev 寫成聊天 LLM，也不讓高風險動作只靠模型機率自動通過。
+
+- **governance / resource curation** · 新收錄的第三方 GitHub repo 統一要求查核時至少 1,000 stars；這只是進入候選名單的門檻，仍須檢查教學角色、維護、License、安全與相關性。官方文件、標準、model card 與不可替代的 canonical source 不套第三方 repo 門檻，公開頁面也不保存會漂移的 star 數字。三語 MCP／Skills 目錄移除舊的「不使用 stars 門檻」例外，PR link audit 會標出低於 1,000 stars 的新 repo，但仍只做初評，由 maintainer 判斷官方來源例外與最終是否收錄。
+
 ## 2026-09-14
 
 - **site / rendered Markdown** · 修正 Stage 6 五組範例共 15 份三語頁面未啟用 `<details markdown="1">`，造成收合區塊裡的粗體、清單、行內程式碼與連結被當成純文字的問題；CLI 工具表與 Stage 3 摘要裡不會由 Markdown 解析的反引號改用 `<code>`，另修正一筆舊 CHANGELOG 的不平衡粗體記號。`check-rendered-site.py` 現在會從實際 HTML 阻擋可見的 `**...**`，以及 details 裡未解析的清單、連結、標題、引用與行內程式碼，同時排除程式碼範例。

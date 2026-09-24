@@ -15,7 +15,7 @@
 | New stage-level exercise folder | OK if it adds **a roadmap node + dual-path SDK demo + 1-line punchline**. 70-150 lines starter is the right size. |
 | Expanding a starter beyond ~150 lines | **Push back**. If it's growing into chapter-length, add a 📚 callout pointing to hello-agents instead. |
 | Adding a 5th `extension` to README | Diminishing return. Keep README tight (under ~200 lines); extra depth goes to the 📚 callout. |
-| New resource (lib / paper / tool / framework) | Add it only when it has a clear teaching role, current documentation, a verified license or official source, and enough real adoption for the relevant section. Curation is the primary value. |
+| New resource (lib / paper / tool / framework) | Add it only when it has a clear teaching role, current documentation, a verified license or official source, and enough real adoption for the relevant section. A new third-party GitHub repository must have at least 1,000 stars at review time; official provider docs, standards, model cards, and irreplaceable canonical sources are exempt. Curation is the primary value. |
 | New chapter-length tutorial inside this repo | **Push back**. If the topic deserves chapter-length, the right move is: write a 1-page summary + simple illustrative case + 📚 callout to a canonical source (hello-agents / Anthropic Cookbook / framework's own docs). |
 | Trilingual mirror priority | Freeze zh-TW first, then ship matching en + zh-Hans mirrors in the same public-content PR. A partial mirror blocks shipping. |
 
@@ -54,7 +54,7 @@ If unsure, ask the user to run `ollama list` and verify.
 | **`claude-mythos-5-1`** | Same model as Fable 5.1, with access limited to vetted cybersecurity and life-science users | $10 input / $50 output; $0.25 cache read |
 | **`claude-haiku-4-5`** | Cheapest cloud option, OK for all exercises | $1 input / $5 output |
 | **`claude-sonnet-5`** | Production default, agent development | $2 input / $10 output |
-| **`claude-opus-5`** | Opus-class default for most workloads; use Fable 5.1 when evals still fall short | $5 input / $25 output |
+| **`claude-opus-5-5`** | Current Opus-class default for most workloads; use Fable 5.1 when evals still fall short | $4 input / $20 output; $0.20 cache read |
 
 ## Framing rules (do not violate)
 
