@@ -209,6 +209,18 @@ Stage 4 先看懂 **Workflow Graph**，再用 framework 把它做出來；Stage 
 
 如果這份地圖幫到你，歡迎給一個 ⭐ Star，或[請作者喝杯咖啡](https://www.buymeacoffee.com/wenyuchiou)。
 
+## :film_projector: 開發活動可視化
+
+觀看 [Gource 開發時間軸影片](https://github.com/itsdarklikehell/awesome-agentic-ai-zh/releases) 了解專案歷史。
+
+影片由 [Gource workflow](.github/workflows/gource.yml) 在每次推送時自動產生。
+
+本機產生影片：
+```bash
+gource -1920x1080 --auto-skip-seconds 1 -o gource.ppm
+ffmpeg -y -r 60 -i gource.ppm -c:v libx264 -preset slow -crf 18 -pix_fmt yuv420p gource.mp4
+```
+
 ## License
 
 MIT。Maintained by [@WenyuChiou](https://github.com/WenyuChiou)。
