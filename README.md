@@ -8,6 +8,13 @@
 
 # awesome-agentic-ai-zh
 
+[![CI](https://github.com/itsdarklikehell/awesome-agentic-ai-zh/actions/workflows/ci.yml/badge.svg)](https://github.com/itsdarklikehell/awesome-agentic-ai-zh/actions/workflows/ci.yml)
+[![Gource](https://github.com/itsdarklikehell/awesome-agentic-ai-zh/actions/workflows/gource.yml/badge.svg)](https://github.com/itsdarklikehell/awesome-agentic-ai-zh/actions/workflows/gource.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub issues](https://img.shields.io/github/issues/itsdarklikehell/awesome-agentic-ai-zh)](https://github.com/itsdarklikehell/awesome-agentic-ai-zh/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/itsdarklikehell/awesome-agentic-ai-zh)](https://github.com/itsdarklikehell/awesome-agentic-ai-zh/pulls)
+
+
 **🤖 一張從「AI Agent 是什麼」走到「能做出可靠系統」的學習地圖**
 
 **先選一條路，再一步一步走。重要概念、動手練習與精選資源都幫你排好順序。**
