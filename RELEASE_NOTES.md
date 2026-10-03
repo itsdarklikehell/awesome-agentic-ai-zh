@@ -1,7 +1,8 @@
 # Release Notes
 
-## 2026-10-02
+## 2026-10-03
 
+* docs: update RELEASE_NOTES.md (85ae1ee)
 * docs: add README badges (c1783a3)
 * chore: add GitHub templates and workflows (7a00c08)
 * Merge branch 'main' of https://github.com/WenyuChiou/awesome-agentic-ai-zh (f185543)
@@ -21,4 +22,3 @@
 * content(stage7.5): separate advanced agentic choices (#268) (c1d71ad)
 * content(stage7): clarify production engineering foundations (#267) (5d504ca)
 * docs(readme): remove banner-adjacent shortcuts (#266) (6708b0f)
-* docs(readme): simplify animated banner links (#265) (c134a84)
