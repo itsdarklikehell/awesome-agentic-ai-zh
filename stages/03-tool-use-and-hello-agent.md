@@ -32,6 +32,8 @@
 
 ### **Tool Schema（工具綱要）**
 
+**JSON**（JavaScript Object Notation） 是程式交換資料的文字格式。
+
 Schema 是工具的說明卡：名字、用途、可填欄位和資料型別。像點餐單告訴客人能點什麼。本章會用 JSON Schema 描述工具。Schema 能約束外形，但程式仍要驗證數值、權限與業務規則。
 
 ### **Tool Call（工具請求）**
@@ -502,7 +504,7 @@ python examples/stage-3/06-schema-design/test_anthropic.py
     <tr><td><a href="https://arxiv.org/abs/2210.03629">ReAct paper</a></td><td>先讀 abstract 與方法圖。</td><td>原始論文；arXiv</td><td>⭐⭐⭐⭐</td></tr>
   </tbody>
   <tbody>
-    <tr><th scope="rowgroup" rowspan="4">官方課程與範例</th><td><a href="https://github.com/anthropics/courses">Anthropic Courses — Tool Use</a></td><td>做 Tool Use notebook。</td><td>官方課程；上游未提供 SPDX</td><td>⭐⭐⭐⭐</td></tr>
+    <tr><th scope="rowgroup" rowspan="4">官方課程與範例</th><td><a href="https://github.com/anthropics/courses">Anthropic Courses — Tool Use</a></td><td>看舊版 Tool Use notebook；動手時對照下一列 Cookbook。</td><td>已封存的官方課程；上游未提供 SPDX</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/anthropics/claude-cookbooks/tree/main/tool_use">Anthropic Tool Use Cookbook</a></td><td>從單工具讀到平行工具。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/anthropics/claude-quickstarts">Anthropic Quickstarts</a></td><td>練習後看完整應用怎麼接工具。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐</td></tr>
     <tr><td><a href="https://github.com/microsoft/ai-agents-for-beginners">Microsoft AI Agents for Beginners</a></td><td>需要另一條完整課程時選讀一章。</td><td>維護中；MIT</td><td>⭐⭐⭐⭐</td></tr>

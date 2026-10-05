@@ -13,6 +13,60 @@ inventory, not a permanent badge. The required PR gate and a fresh collection ru
 the source of truth after any later change; historical exercise counts below must not
 be quoted as the current whole-repository total.
 
+## Audited first-use terminology
+
+The first-use layer covers 50 manually checked term/page pairs in nine chapter
+families, with 150 locale cases. It does not detect every all-capital token or
+claim every abbreviation in the site has been audited. Each first encounter
+shows its verified full name and a short learner meaning. Existing heading
+anchors, code, source links, product names, original images and resource facts
+remain stable. For example, LoRA is Low-Rank Adaptation: small trainable matrices
+adapt a frozen model. RL remains the broader reward-based learning method;
+RLHF specifically uses human feedback or preferences.
+
+`scripts/test_first_use_acronyms.py` renders the finite enrolled inputs with the
+existing pinned Markdown dependency and a test-only standard-library HTML parser.
+It rejects later definitions and names found only in code, comments, closed
+content, hidden elements, attributes or image alt text. An unchanged short heading
+may use its immediately adjacent visible definition. The model-lifecycle training
+fixtures reuse this same helper. Separate image-position cases require visible
+legends before the manually inspected training diagrams. Original-image hashes
+keep the reviewed training and banner artwork stable but do not prove semantics.
+Human review still checks the meanings and the actual displayed image labels.
+
+The README navigation header is a narrow exception for CLI and MCP: it starts
+with the banner and project title, without detached terminology paragraphs.
+`scripts/test_main_readme_content.py` protects that clean header and its visible
+locale-correct routes to Track A1 and the glossary, including mutation cases that
+put either definition back before or after the banner. CLI in Track A1 and MCP
+in the glossary remain enrolled in the unchanged first-use checks above. The
+other README terms and all teaching-page/image checks keep their prior rules.
+
+The existing reader-UX character counter is unchanged. Stage 1 limits are refreshed
+only from 8197 / 12475 / 8222 to 8569 / 13193 / 8599 (zh-TW / en / zh-Hans),
+and glossary limits from 14161 / 24446 / 14471 to 14380 / 24657 / 14690.
+These six caps equal the final measured proxy lengths, with no spare allowance.
+The separate English README source-length ceiling moves from 14000 to its exact
+measured 14277 characters; its base source used 13979, so the net addition is 298.
+Only newly added names/meanings were compressed before that refresh. Chinese
+README source ceilings remain 14000. Every other page cap and the existing
+disclosure/resource/heading ratchets stay unchanged.
+This is a bounded contract refresh for the newly required visible definitions,
+not a claim that the old size metric is unchanged or a measure of reading quality.
+Rebuild all three PDFs and inspect representative new legends, definitions and
+existing wide tables, in addition to every-page text/bounds checks, before release.
+
+## Release PDF layout checks
+
+`scripts/build-pdf.sh` marks generated tables with eight or more header columns for
+A4 landscape pages. Curriculum text, URLs, natural column widths, and the existing
+8.5pt table font remain unchanged. `scripts/test_release_manifest.py` checks the
+classification and fail-closed geometry rules. `release_manifest.py validate-pdfs`
+uses `pdftotext -bbox-layout` to check text bounds on every physical page in all
+three editions, including landscape pages. This detects off-page text, not cell
+overlap, image cropping, or readable typography. Inspect representative rendered
+wide tables, covers, and ordinary pages before publishing rebuilt assets.
+
 ## Visible required-reading and resource contract
 
 Important reading, featured projects, and complete rated learning-resource tables are part of the
@@ -337,7 +391,7 @@ complete Skill example. The three HTML tables use accessible rowgroups `4／4／
 `7／1`; required reading remains visible even though the complete catalogs are secondary.
 
 `scripts/test_setup_guide_content.py` locks the exact freshness marker, external URL order, native Claude
-Code installers, Python 3.12／`uv`, `claude-sonnet-5`, copyable secret setup, real rowgroups, editorial
+Code installers, Python 3.12／`uv`, `claude-sonnet-5-5`, copyable secret setup, real rowgroups, editorial
 ratings, and README routing. It rejects the old Node 18／npm-first path, fixed setup times, frozen prices,
 promotional credits, stale desktop availability, volatile GitHub stars, and empty-quote artifacts.
 Reader UX, strict anchors, mirror／locale checks, freshness, and the trilingual site build run beside it.
@@ -359,20 +413,21 @@ mainline plus only 50 non-whitespace characters.
 
 ### Course map — learn first, certificate second
 
-`resources/courses*` keeps five bold credential terms, a task-first chooser, 12 rated courses, a
+`resources/courses*` keeps five bold credential terms, a task-first chooser, 11 rated courses, a
 copyable five-line work-evidence card, and visible return links to Stages 3／4／7. The two disclosures
 hold only certificate caveats and maintainer rules. The main table uses four accessible rowgroups
-(`3／5／2／2`); each course row has one primary URL, while the Datawhale companion stays outside the
+(`3／4／2／2`); each course row has one primary URL, while the Datawhale companion stays outside the
 table so category and rating semantics remain unambiguous.
 
-`scripts/test_courses_content.py` locks the 12 URL／rating pairs, full 22-link order, exact freshness
+`scripts/test_courses_content.py` locks the 11 URL／rating pairs, full 20-link order, exact freshness
 marker, closed disclosure count, portfolio card, locale-correct stage links, and current facts such
 as the Hugging Face 80% Unit 1 threshold, Microsoft／Datawhale no-certificate status, DeepLearning.AI
-Pro boundary, W&B's unstated public certificate rule, Claude quiz badge, and Alibaba identity
+Pro boundary, Claude quiz badge, and Alibaba identity
 condition. It rejects the former tier labels, Skilljar entrance, Edureka／Huawei rows, frozen prices,
 volatile stars, empty-quote artifacts, and generic verification-date filler. The freshness config
 separately enrolls course availability, cost, certificate, assessment, and repository status on a
-90-day review cycle.
+90-day review cycle. The temporary W&B removal preserves the access qualification without
+claiming permanent discontinuation; inactive URLs are absent from the chooser, table, and fact pack.
 
 ### Glossary — visible definitions and stable facts
 

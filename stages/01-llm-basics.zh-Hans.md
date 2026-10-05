@@ -1,5 +1,7 @@
 # Stage 1 — LLM 基础（LLM Basics）
 
+**LLM**（Large Language Model）：能读写语言的模型。
+
 > [繁體中文](./01-llm-basics.md) | [English](./01-llm-basics.en.md) | **简体中文**
 
 > 本章目的：先看懂模型如何从数据走到 Agent，再通过一条可重复的本地到云端路径调用 LLM。你会理解 **Token（词元）**、**Context Window（上下文窗口）** 和 **Temperature（温度）**，也会用成本与延迟解释模型选择。
@@ -10,7 +12,7 @@
 
 完成本阶段后，你可以：
 
-- 用 Ollama 的本地模型完成第一次 API 调用，再与 Anthropic 做对照。
+- 用 Ollama 的本地模型完成第一次 API（Application Programming Interface，让程序调用服务的接口） 调用，再与 Anthropic 做对照。
 - 说出模型从 Pre-training、Post-training 到 Inference 的顺序。
 - 用简单例子解释 token、context window 和 temperature。
 - 从响应的 `usage` 字段读出输入和输出 token。
@@ -37,15 +39,25 @@ Temperature 是控制采样变化程度的参数。把模型想成每次都从�
 `数据 → Pre-training → Base Model → Post-training → Instruct Model → Inference → Agent 系统`
 
 - **Pre-training（预训练）**：模型先从大量文字、图像或代码中学习模式。这一步会改变模型权重。
-- **Post-training（后训练）**：再用示范、偏好或反馈，教模型遵循指令并更安全地完成任务。常见方法有 **SFT**、**DPO** 和 **RLHF/RL**；这一步也会改变权重。
+- **Post-training（后训练）**：再用示范、偏好或反馈，教模型遵循指令并更安全地完成任务。这一步也会改变权重。常见方法如下。
+  - **SFT**（Supervised Fine-Tuning）：用好的输入和答案教模型模仿。
+  - **DPO**（Direct Preference Optimization）：用较好、较差的答案配对教模型学习偏好。
+  - **RLHF**（Reinforcement Learning from Human Feedback）：把人类反馈用于强化学习。
+  - **RL**（Reinforcement Learning）：让模型依据奖励学习；奖励也可以来自规则。
 - **Fine-tuning（微调）**：用较小、较专门的数据继续改变模型权重。Post-training 是广义的后续训练阶段；Fine-tuning 是其中一种常见做法。
 - **Inference（推理）**：训练完成后，模型收到一次输入并产生一次结果。这是在使用模型，不是在重新训练它。
+
+**RAG**（Retrieval-Augmented Generation）：先找相关资料，再依资料回答。
 
 ![数据经过 Pre-training 和 Post-training，变成可用于 Inference 的模型；Prompt、RAG、Memory、Tools 和 Harness 在 Agent 系统中包住模型，通常不改变模型权重](../resources/diagrams/model-lifecycle-to-agent.zh-Hans.png)
 
 **Agent** 不是训练流程中的下一个模型检查点。它是把模型、Prompt、RAG、Memory、Tools 和 Harness 连接起来的系统。这些部分通常在模型外部工作，不会改变模型权重。
 
-想了解 SFT、DPO、RLHF/RL、GRPO、LoRA/PEFT、Distillation 和 Quantization 各自做什么，请打开[模型训练与调整选修指南](../resources/model-training-guide.zh-Hans.md)。初学者不需要在本阶段自己训练模型。
+- **GRPO**（Group Relative Policy Optimization）：比较同一问题的多个答案，再根据相对表现学习。
+- **LoRA**（Low-Rank Adaptation）：冻结原来的权重，再训练新增的低秩矩阵。
+- **PEFT**（Parameter-Efficient Fine-Tuning）：只训练较少参数的一组方法。
+
+想了解这些方法与 Distillation、Quantization 的区别，请打开[模型训练与调整选修指南](../resources/model-training-guide.zh-Hans.md)。初学者不需要在本阶段自己训练模型。
 
 ## 场景式模型选择器
 
@@ -56,8 +68,8 @@ Temperature 是控制采样变化程度的参数。把模型想成每次都从�
 | 你的场景 | 先试哪条路 | 选择理由 |
 |---|---|---|
 | 第一次学 API，想零费用反复试 | **Ollama + `gemma4:e4b`** | 本地运行，单次 API 成本为 $0，可以反复修改示例。 |
-| 想比较云端质量，数据可以发送出去 | **Claude Haiku 4.5／Sonnet 5** | Anthropic SDK 路径简单，按输入和输出 token 计费。 |
-| OpenAI Agent API | **GPT-6 Sol／GPT-6 Luna** | 难题先试 Sol；大量简单任务先试 Luna。用自己的任务测试，再查价格。 |
+| 想比较云端质量，数据可以发送出去 | **Claude Haiku 4.5／Sonnet 5.5** | Anthropic SDK（Software Development Kit，开发工具和库的工具包） 路径简单，按输入和输出 token 计费。 |
+| OpenAI Agent API | **GPT-6.1 Sol／GPT-6 Luna** | 难题先试 Sol；大量简单任务先试 Luna。用自己的任务测试，再查价格。 |
 | 文档很长，还要处理图像或视频 | **Gemini 3.8 Flash 或 Kimi K3** | 先查型号的 context 和多模态支持，再用自己的文档小测。 |
 | 中文 API 任务，希望控制用量 | **DeepSeek V4.1 Flash 或 GLM-5.3** | 比较官方价格、输出限制和可用性，不要只看模型名称。 |
 | 固定选项的分类、评分或分流，结果要直接交给程序 | **Jev 1.13（服务 Early access）** | 返回 Choice、Score 或 Noul 的概率结果；低置信度或高风险动作仍要交给人或另一个模型。 |
@@ -309,7 +321,7 @@ import anthropic
 # Anthropic 公开定价（每 1M token、USD）— 运行前查看 https://www.anthropic.com/pricing
 PRICING = {
     "claude-haiku-4-5":   {"input": 1.00, "output":  5.00},
-    "claude-sonnet-5":    {"input": 2.00, "output": 10.00},
+    "claude-sonnet-5-5":  {"input": 2.00, "output": 10.00},
     "claude-opus-5-5":    {"input": 4.00, "output": 20.00},
     "claude-fable-5-1":   {"input": 10.00, "output": 50.00},
 }
@@ -359,7 +371,7 @@ print("\n✅ 练习 3 通过（Anthropic）— 已按实际 token 算出 Haiku�
   <thead><tr><th scope="col">分类</th><th scope="col">资源</th><th scope="col">入口</th><th scope="col">推荐度</th><th scope="col">用途／状态</th></tr></thead>
   <tbody>
     <tr><th scope="rowgroup" rowspan="4">官方 API 入门</th><td>Anthropic Cookbook</td><td><a href="https://github.com/anthropics/claude-cookbooks">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Claude API notebook，可查 tool use、batch 和 prompt cache。</td></tr>
-    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>⭐⭐⭐⭐</td><td>Anthropic 官方课程，从 API 基础逐步延伸。</td></tr>
+    <tr><td>Anthropic Courses</td><td><a href="https://github.com/anthropics/courses">GitHub</a></td><td>⭐⭐⭐⭐</td><td>已归档的官方课程；可看旧示例，动手时请对照下方现行 API Quickstart。</td></tr>
     <tr><td>OpenAI Cookbook</td><td><a href="https://github.com/openai/openai-cookbook">GitHub</a></td><td>⭐⭐⭐⭐</td><td>OpenAI API、structured output 和 function calling 示例。</td></tr>
     <tr><td>Anthropic Claude API Quickstart</td><td><a href="https://platform.claude.com/docs/en/get-started">官方文档</a></td><td>⭐⭐⭐</td><td>快速完成第一次 Claude API 调用。</td></tr>
   </tbody>
@@ -476,17 +488,17 @@ print("💡 本次调用为 $0（不含电费）")
 <details markdown="1">
 <summary>🌐 完整 18 个家族表（官方规格入口）</summary>
 
-<small>全表查核：2026-09-22 UTC；GPT 一行更新：2026-09-23 UTC。</small>
+<small>全表查核：2026-09-22 UTC。GPT 一行更新：2026-10-02 UTC。Claude 一行更新：2026-09-28 UTC。Gemini 一行更新：2026-10-02 UTC。</small>
 
 没有可靠公开数字就写“官方未公布”。价格通常是 USD／每 1M token；供应商若用别的单位，就按官方单位记录。
 **缓存（cache）**就像重复使用读过的便条：读取旧内容和写入新内容可能有不同价格。
 
 | 家族 | 当前推荐型号 | 状态 | Context | 价格或授权 | 适合做什么 | 限制 | 官方来源 |
 |---|---|---|---|---|---|---|---|
-| Claude | Fable 5.1（`claude-fable-5-1`）；Mythos 5.1（`claude-mythos-5-1`）；Opus 5.5（`claude-opus-5-5`）；Sonnet 5；Haiku 4.5 | Fable／Opus／Sonnet／Haiku：正式可用；Mythos：限核准用户 | 多数为 1M context／128K 最大输出；Haiku 为 200K／64K | Claude API：Fable／Mythos US$10/$50、Opus US$4/$20、Sonnet US$2/$10、Haiku US$1/$5（每百万输入／输出 token）；Opus cache read US$0.20，Fable／Mythos US$0.25 | 长文、编程、长时间 Agent 工作流 | Mythos 5.1 只提供给通过审核的网络安全与生命科学用户；云端合作平台的区域价格另查 | [Claude 模型总览](https://platform.claude.com/docs/en/models/overview) · [Opus 5.5](https://platform.claude.com/docs/en/models/opus-5-5/overview) · [Claude API 价格](https://platform.claude.com/docs/en/about-claude/pricing) |
-| GPT | GPT-6 Astra（`gpt-6-astra`）；Sol（`gpt-6-sol`）；Luna（`gpt-6-luna`） | 三者均列于正式 API 模型页；免费层不支持 | 三者皆为 1.05M context／128K 最大输出 | Standard API，每百万 token，US$ 输入／cache 读／cache 写／输出：Astra $10/$1/$12.50/$50；Sol $2/$0.20/$2.50/$10；Luna $0.10/$0.01/$0.125/$0.50 | Astra 做最难的任务；Sol 做较难的编程与 Agent 工作；Luna 做聚焦、重复且量大的工作 | 超过 272K 输入时，整次请求的输入与 cache 价格为 2 倍、输出为 1.5 倍；Batch／Flex 为 Standard 的一半，Fast 为 2 倍。实际配额依账号层级，工具调用可能另收费 | [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) · [GPT-6 Sol](https://developers.openai.com/api/docs/models/gpt-6-sol) · [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna) · [OpenAI API 价格](https://developers.openai.com/api/docs/pricing) |
+| Claude | Fable 5.1（`claude-fable-5-1`）；Mythos 5.1（`claude-mythos-5-1`）；Opus 5.5（`claude-opus-5-5`）；Sonnet 5.5（`claude-sonnet-5-5`）；Haiku 4.5 | Fable／Opus／Sonnet／Haiku：正式可用；Mythos：限核准用户 | 多数为 1M context／128K 最大输出；Haiku 为 200K／64K | Claude API：Fable／Mythos US$10/$50、Opus US$4/$20、Sonnet US$2/$10、Haiku US$1/$5（每百万输入／输出 token）；Sonnet／Opus cache read US$0.20，Fable／Mythos US$0.25 | 长文、编程、长时间 Agent 工作流 | Mythos 5.1 限网络安全与生命科学核准用户；Sonnet 5.5 的工具指定与 temperature 设置不同于旧版，升级现有程序前先看迁移指南；云端合作平台价格另查 | [Claude 模型总览](https://platform.claude.com/docs/en/models/overview) · [Opus 5.5](https://platform.claude.com/docs/en/models/opus-5-5/overview) · [Sonnet 5.5](https://platform.claude.com/docs/en/models/sonnet-5-5/overview) · [迁移指南](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide) · [Claude API 价格](https://platform.claude.com/docs/en/about-claude/pricing) |
+| GPT | GPT-6 Astra（`gpt-6-astra`）；GPT-6.1 Sol（`gpt-6.1-sol`）；GPT-6 Luna（`gpt-6-luna`） | 正式 API 模型；免费层不支持 | 1.05M context／128K 最大输出 | Standard API，每百万 token，US$ 输入／cache 读／cache 写／输出。Astra $10/$1/$12.50/$50。Sol 6.1 $2/$0.10/$2.50/$10。Luna $0.10/$0.01/$0.125/$0.50 | Sol 6.1 用于编程与多步 Agent 工作；Luna 用于聚焦、重复任务；Astra 的成本与质量差异要自行评测 | Sol 6.1 的工具调用须用 Responses API；Chat Completions 不支持工具调用。超过 272K 输入时，整次请求输入与 cache 价格为 2 倍、输出为 1.5 倍。Batch／Flex 半价，Fast 为 2 倍。工具可能另收费 | [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) · [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol) · [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna) · [OpenAI API 价格](https://developers.openai.com/api/docs/pricing) |
 | Jev（TypeSafe AI） | TypeSafe direct：Jev 1.13（`jev-1.13.0`），稳定 alias `jev-latest`；Cloudflare route：`typesafe/jev` | 正式模型；服务仍为 Early access | TypeSafe direct：64K／request，`state` 加最长 question 上限 32K；Cloudflare route：32K | TypeSafe direct：$0.042／百万 input token，output 不计费；Cloudflare route：以 Cloudflare dashboard 显示为准 | 固定选项分类、路由、rubric 评分和 guardrail 判断 | 不生成自由文本；概率不等于正确，门槛、权限和 fallback 要由自己的程序与 Eval 决定 | [TypeSafe 模型规格](https://docs.typesafe.ai/models) · [Jev 入门](https://docs.typesafe.ai/introduction) · [Early access 公告](https://typesafe.ai/blog/introducing-system-one-models-and-jev) · [Cloudflare route](https://developers.cloudflare.com/ai/models/typesafe/jev/) |
-| Gemini | Gemini 3.8 Flash | 正式可用 | 1,048,576 context／65,536 最大输出 | 2026-12-31 前介绍价 $0.75/$3.75（输入／输出） | 长时间软件开发、多模态与多步 Agent 工作 | Gemini 3.1 Pro 为 Preview；介绍价有期限 | [Gemini 3.8 Flash](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash) · [Gemini API 定价](https://ai.google.dev/gemini-api/docs/pricing) |
+| Gemini | Gemini 3.8 Flash；Gemini 4 Argon（发布参考；限制开放） | Flash：正式可用；Argon：限 Fairwind 可信网络安全防御者 | Flash：1,048,576 context／65,536 最大输出。Argon：公告 1M 输出上限，公开 API context 规格未公布 | Flash：2026-12-31 前介绍价 $0.75/$3.75（输入／输出）。Argon：公告未来介绍价 $2/$10，期满后 $4/$20；每百万 token | Flash 用于可执行的多模态与 Agent 练习；Argon 是长任务模型的官方发布参考 | Argon 的一般 API／Google AI Ultra 开放仍待后续发布，公开 API model ID 未公布。不能作为本章可执行默认值 | [Gemini 3.8 Flash](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash) · [Gemini API 定价](https://ai.google.dev/gemini-api/docs/pricing) · [Gemini 4 Argon 公告](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/) |
 | DeepSeek | V4.1 Flash（`deepseek-flash`）；V4 Pro（`deepseek-v4-pro`） | 两者 API 仍可用；旧 V4 Flash 已退役 | 1M context／384K 最大输出 | 每百万 token，峰／谷：Flash 输入 US$0.30/$0.15、输出 US$1.20/$0.60、cache hit US$0.006/$0.003；Pro 输入 US$1.32/$0.66、输出 US$3.96/$1.98、cache hit US$0.044/$0.022 | 推理、编程与大量 token 任务 | 旧 `deepseek-v4-flash` 名称暂时导向 V4.1 Flash；峰值为周一至周五 UTC 01–04、06–10 时 | [DeepSeek 模型与价格](https://api-docs.deepseek.com/quick_start/pricing/) · [更新记录](https://api-docs.deepseek.com/updates/) |
 | Kimi | `kimi-k3` | 正式可用 | 1M | API：cache hit／输入／输出分别为 CNY 2／20／100，每百万 tokens | 中文长文、视觉输入、长上下文任务 | 2.8T 参数；部署与配额取决于平台 | [Kimi 平台总览](https://platform.kimi.com/docs/overview) · [Kimi API 定价](https://platform.kimi.com/) |
 | Hunyuan | `Hy3`（TokenHub） | 正式可用 | 256K | API：cache hit／输入／输出分别为 CNY 0.25／1／4，每百万 tokens | 中文推理与 Tencent Cloud 整合 | `hy3-preview` 已于 2026-08-31 下线；Hy4 仍是 Preview | [TokenHub 模型列表](https://cloud.tencent.com/document/product/1823/130051) · [TokenHub 定价](https://cloud.tencent.com/document/product/1823/130055) · [Hy3 迁移公告](https://cloud.tencent.com/announce/detail/2391) |
@@ -494,7 +506,7 @@ print("💡 本次调用为 $0（不含电费）")
 | Qwen | qwen3.8-max（API）；Qwen3.8 开放权重变体 | 正式可用 | 1M | API 按地区定价；例如北京为 CNY 12／36，每百万输入／输出 tokens；开放权重变体使用各自授权 | 中文任务、多模态、自部署工作流 | API 型号与开放权重变体不可混用；可用性与授权要分别确认 | [Qwen 3.8 Max](https://help.aliyun.com/en/model-studio/qwen3-8-max) |
 | GLM | GLM-5.3 | 正式可用 | 1M（输出 128K） | API：输入／cache hit／输出分别为 US$1.40／$0.26／$4.40，每百万 tokens | 中文 agent、工具使用、推理 | 纯文本；reasoning 始终启用 | [GLM-5.3 文档](https://docs.z.ai/guides/llm/glm-5.3) · [GLM API 定价](https://docs.z.ai/guides/overview/pricing) |
 | Yi | Yi-34B／Yi-9B 及 200K 变体 | 冻结／历史 | 200K（部分旧型号） | 官方 repo 授权；当前 API 价格官方未公布 | 重现已有 Yi 实验、自部署历史基线 | 官方 repo 未证明目前仍在维护或有 frontier 后继型号 | [01.AI Yi repository](https://github.com/01-ai/Yi) |
-| Llama | Llama 4 Scout／Maverick；Llama 3.3 70B（较实用旧基线） | 开放权重 | Scout 10M | Llama Community License | 自部署、微调、生态整合 | Scout 需要 H100 级硬件；授权不是 Apache／MIT | [Meta AI 开发者文档](https://developer.meta.com/ai/docs/overview/) |
+| Llama | Llama 4 Scout／Maverick；Llama 3.3 70B（较实用旧基线） | 开放权重 | Scout 10M | Llama Community License | 自部署、微调、生态整合 | Scout 需要 H100 级硬件；授权不是 Apache／MIT | [Meta Llama 文档](https://dev.meta.ai/llama) |
 | Muse | Muse Spark 1.3（Standard：`muse-spark-1.3`；Contributor：`muse-spark-1.3-contributor`）；Muse Glimmer 30B | Spark：Meta Model API 公开预览；Glimmer：开放权重 | Spark 约 1M；Glimmer 131K | Spark Standard：每百万 token 输入／cache hit／输出 US$1.25/$0.15/$4.25；Contributor：US$0.10/$0.002/$0.20，但允许 Meta 用输入与输出训练模型。Glimmer：Apache 2.0 | Spark 做云端 Agent 与编程任务；Glimmer 做本地 Agent | 产品 Muse、API 模型 Spark 与开放权重 Glimmer 是不同东西；Spark 1.3 的音频理解尚未完整支持 | [Meta Model API 模型](https://dev.meta.ai/docs/models) · [价格与数据方案](https://dev.meta.ai/docs/pricing-rate-limits) · [Muse Glimmer](https://huggingface.co/meta-models/Muse-Glimmer-30B) |
 | Grok | Grok 4.7（`grok-4.7`） | 正式可用 | 500K | xAI API：每百万 token 输入／cache hit／输出 US$2/$0.50/$6；提示达到 200K 后，整次请求改用 US$4/$1/$12 | 编程、工具调用与多步 Agent 任务 | 美国区域端点另加 10%；服务器工具调用可能另计费 | [Grok 4.7 规格](https://docs.x.ai/developers/models/grok-4.7) · [xAI 价格](https://docs.x.ai/developers/pricing) |
 | MiMo | MiMo V2.6 Pro（`mimo-v2.6-pro`） | 正式可用 API | 1M context／128K 最大输出 | Xiaomi API：每百万 token 输入／cache hit／输出 US$0.435/$0.0036/$0.87；官方另列 CNY 3/0.025/6 | 长任务、工具调用与多模态输入的 Agent | 要确认账号可用地区、配额与实际账单；不要把供应商自述 benchmark 当跨模型排名 | [MiMo V2.6 Pro 规格与价格](https://mimo.mi.com/models/en-US/mimo-v2.6-pro) · [MiMo API 模型列表](https://mimo.mi.com/docs/en-US/api/model/list-models) |

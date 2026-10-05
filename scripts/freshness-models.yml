@@ -13,15 +13,19 @@ stage01_fact_pack:
   canonical: 'stages/01-llm-basics.md'
   verified_on: '2026-09-22'
   provider_updates:
-    gpt: '2026-09-23'
+    gpt: '2026-10-02'
+    gemini: '2026-10-02'
+    anthropic: '2026-09-28'
   scope: ['models', 'pricing', 'availability', 'deprecations', 'model-lifecycle']
   official_sources:
     openai_model_development: 'https://openai.com/policies/how-chatgpt-and-our-foundation-models-are-developed/'
     google_llm_tuning: 'https://developers.google.com/machine-learning/crash-course/llm/tuning'
     claude: 'https://platform.claude.com/docs/en/models/fable-5-1/overview'
     claude_opus: 'https://platform.claude.com/docs/en/models/opus-5-5/overview'
+    claude_sonnet: 'https://platform.claude.com/docs/en/models/sonnet-5-5/overview'
+    claude_sonnet_migration: 'https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide'
     gpt: 'https://developers.openai.com/api/docs/models/gpt-6-astra'
-    gpt_sol: 'https://developers.openai.com/api/docs/models/gpt-6-sol'
+    gpt_sol: 'https://developers.openai.com/api/docs/models/gpt-6.1-sol'
     gpt_luna: 'https://developers.openai.com/api/docs/models/gpt-6-luna'
     gpt_pricing: 'https://developers.openai.com/api/docs/pricing'
     typesafe_jev: 'https://docs.typesafe.ai/introduction'
@@ -29,6 +33,7 @@ stage01_fact_pack:
     typesafe_jev_launch: 'https://typesafe.ai/blog/introducing-system-one-models-and-jev'
     typesafe_jev_cloudflare: 'https://developers.cloudflare.com/ai/models/typesafe/jev/'
     gemini: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash'
+    gemini_argon: 'https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/'
     gemini_live: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.8-live'
     deepseek: 'https://api-docs.deepseek.com/quick_start/pricing/'
     deepseek_updates: 'https://api-docs.deepseek.com/updates/'
@@ -38,7 +43,7 @@ stage01_fact_pack:
     qwen: 'https://help.aliyun.com/en/model-studio/qwen3-8-max'
     glm: 'https://docs.z.ai/guides/llm/glm-5.3'
     yi: 'https://github.com/01-ai/Yi'
-    llama: 'https://developer.meta.com/ai/docs/overview/'
+    llama: 'https://dev.meta.ai/llama'
     muse: 'https://huggingface.co/meta-models/Muse-Glimmer-30B'
     muse_spark: 'https://dev.meta.ai/docs/models'
     grok: 'https://docs.x.ai/developers/models/grok-4.7'
@@ -191,6 +196,7 @@ agent_memory_fact_pack:
     langmem: 'https://github.com/langchain-ai/langmem'
     graphiti: 'https://github.com/getzep/graphiti'
     zep: 'https://github.com/getzep/zep'
+    deja_vu: 'https://github.com/vshulcz/deja-vu'
   research_sources:
     coala: 'https://arxiv.org/abs/2309.02427'
     generative_agents: 'https://arxiv.org/abs/2304.03442'
@@ -199,6 +205,9 @@ agent_memory_fact_pack:
 stage07_fact_pack:
   canonical: 'stages/07-multi-agent-production.md'
   verified_on: '2026-09-13'
+  resource_updates:
+    openai_responses_multi_agent: '2026-10-02'
+    google_managed_agents: '2026-10-02'
   scope: ['evals', 'observability', 'human-approval', 'persistence', 'recovery', 'orchestration', 'resources']
   official_sources:
     anthropic_evals: 'https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents'
@@ -210,6 +219,9 @@ stage07_fact_pack:
     langgraph_interrupts: 'https://docs.langchain.com/oss/python/langgraph/interrupts'
     ibm_loop_engineering: 'https://www.ibm.com/think/topics/loop-engineering'
     openai_harness_engineering: 'https://openai.com/index/harness-engineering/'
+    openai_responses_multi_agent: 'https://developers.openai.com/api/docs/guides/responses-multi-agent'
+    google_managed_agents: 'https://ai.google.dev/gemini-api/docs/agents'
+    google_antigravity_agent: 'https://ai.google.dev/gemini-api/docs/antigravity-agent'
 
 walkthrough_fact_pack:
   canonical: 'walkthroughs/build-first-agent-in-7-steps.md'
@@ -361,7 +373,7 @@ courses_fact_pack:
     hugging_face_agents: 'https://huggingface.co/learn/agents-course'
     microsoft_agents_for_beginners: 'https://github.com/microsoft/ai-agents-for-beginners'
     deeplearning_ai_agentic_ai: 'https://www.deeplearning.ai/courses/agentic-ai/'
-    wandb_agents: 'https://wandb.ai/site/courses/agents/'
+    # W&B Agents temporarily removed 2026-10-02: old URL returned 404; replacement could not be opened.
     claude_academy: 'https://academy.claude.com/'
     claude_academy_faq: 'https://academy.claude.com/help/faq'
     langchain_academy: 'https://academy.langchain.com/courses/intro-to-langgraph'
@@ -500,13 +512,13 @@ verified_pages:
     max_age_days: 90
 
 current_frontier_models:
-  # GPT-6 Sol and Luna checked 2026-09-23; other providers retain prior checks.
+  # GPT-6 Sol and Luna checked 2026-09-23; Claude Sonnet 5.5 checked 2026-09-28.
   # This list documents what maintainers checked; stale_patterns below are the gate.
   anthropic:
     - "Fable 5.1"
     - "Mythos 5.1"   # same model; limited to vetted cyber and life-science users
     - "Opus 5.5"
-    - "Sonnet 5"
+    - "Sonnet 5.5"
     - "Haiku 4.5"
   openai:
     - "GPT-6 Astra"
@@ -582,7 +594,7 @@ stale_patterns:
   - pattern: 'https://ai\.meta\.com/llama/get-started/'
     include_files: ['stages/01-llm-basics.md']
     qualifier_terms: []
-    note: 'Meta moved the current Llama developer entry point to developer.meta.com/ai/docs/overview/'
+    note: 'The current Meta Llama documentation entry point is https://dev.meta.ai/llama'
 
   - pattern: '(?:54 exercises|54 個練習|54 个练习|gemma4:e4b.{0,60}7\.5 GB|gemma4:e2b.{0,60}4\.0 GB)'
     include_files: ['examples/README.md']
